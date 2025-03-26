@@ -29,11 +29,11 @@ export class AppComponent {
   nuevoProducto = {
     producto: '',
     presentacion: '',
-    stock: 0,
-    precio: 0,
+    stock: '',
+    precio: '',
     vencimiento: '',
   };
-  venta = { producto_id: 0, cantidad: 0 };
+  venta = { producto_id: '', cantidad: '' };
 
   constructor(private http: HttpClient) {}
 

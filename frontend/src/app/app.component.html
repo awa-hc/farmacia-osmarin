@@ -4,6 +4,7 @@
     <p-table [value]="productos" [paginator]="true" [rows]="5">
       <ng-template pTemplate="header">
         <tr>
+          <th>ID del producto</th>
           <th>Producto</th>
           <th>Presentación</th>
           <th>Stock</th>
@@ -12,6 +13,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-producto>
         <tr>
+          <td>{{ producto.id }}</td>
           <td>{{ producto.producto }}</td>
           <td>{{ producto.presentacion }}</td>
           <td>{{ producto.stock }}</td>
