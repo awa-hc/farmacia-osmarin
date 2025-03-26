@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/gin-contrib/cors" // Importamos el paquete CORS
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -87,15 +88,32 @@ func getVentas(c *gin.Context) {
 
 func main() {
 	initDB()
+
+	// Crear una instancia del router Gin
 	r := gin.Default()
+
+	// Configurar CORS para permitir solicitudes desde cualquier origen
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"}, // Permite todos los orígenes
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
+	// Definir las rutas
 	r.GET("/productos", getProductos)
 	r.POST("/productos", addProducto)
 	r.POST("/vender", venderProducto)
 	r.GET("/ventas", getVentas)
 
+	// Obtener el puerto del entorno o usar el puerto 8080 por defecto
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
+
+	// Iniciar el servidor
 	r.Run(":" + port)
 }

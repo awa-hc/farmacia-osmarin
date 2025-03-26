@@ -43,7 +43,7 @@ export class AppComponent {
 
   cargarProductos() {
     this.http
-      .get<any[]>('http://localhost:8080/productos')
+      .get<any[]>('https://farmacia-osmarin.fly.dev/productos')
       .subscribe((data) => {
         this.productos = data;
       });
@@ -51,14 +51,14 @@ export class AppComponent {
 
   agregarProducto() {
     this.http
-      .post('http://localhost:8080/productos', this.nuevoProducto)
+      .post('https://farmacia-osmarin.fly.dev/productos', this.nuevoProducto)
       .subscribe(() => {
         this.cargarProductos();
       });
   }
 
   venderProducto() {
-    this.http.post('http://localhost:8080/vender', this.venta).subscribe(() => {
+    this.http.post('https://farmacia-osmarin.fly.dev/vender', this.venta).subscribe(() => {
       this.cargarProductos();
     });
   }
