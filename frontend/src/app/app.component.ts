@@ -7,59 +7,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   providers: [HttpClient],
-  imports: [
-    CommonModule,
-    FormsModule,
-    TableModule,
-    InputTextModule,
-    ButtonModule,
-    CardModule,
-    DropdownModule,
-  ],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  productos: any[] = [];
-  nuevoProducto = {
-    producto: '',
-    presentacion: '',
-    stock: '',
-    precio: '',
-    vencimiento: '',
-  };
-  venta = { producto_id: '', cantidad: '' };
-
-  constructor(private http: HttpClient) {}
-
-  ngOnInit() {
-    this.cargarProductos();
-  }
-
-  cargarProductos() {
-    this.http
-      .get<any[]>('https://farmacia-osmarin.fly.dev/productos')
-      .subscribe((data) => {
-        this.productos = data;
-      });
-  }
-
-  agregarProducto() {
-    this.http
-      .post('https://farmacia-osmarin.fly.dev/productos', this.nuevoProducto)
-      .subscribe(() => {
-        this.cargarProductos();
-      });
-  }
-
-  venderProducto() {
-    this.http.post('https://farmacia-osmarin.fly.dev/vender', this.venta).subscribe(() => {
-      this.cargarProductos();
-    });
-  }
-}
+export class AppComponent {}

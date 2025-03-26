@@ -1,0 +1,57 @@
+<router-outlet></router-outlet>
+
+<div class="card flex justify-center">
+  <p-drawer [(visible)]="visible" [closable]="false">
+    <!-- Header del Drawer -->
+    <ng-template #header>
+      <div class="flex items-center gap-2">
+        <p-avatar
+          image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+          shape="circle"
+        />
+        <span class="font-bold">Osmarin xD</span>
+      </div>
+    </ng-template>
+
+    <!-- Lista de Rutas -->
+    <div class="p-4 space-y-2">
+      <h2 class="text-lg font-semibold mb-2">Menú</h2>
+      <ul class="space-y-1">
+        <li *ngFor="let route of menuRoutes">
+          <a
+            [routerLink]="['/dashboard', route.path]"
+            class="block p-2 hover:bg-gray-100 rounded items-center gap-2"
+            (click)="visible = false"
+          >
+            <i [class]="route.icon"></i>
+            {{ route.label }}
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Footer del Drawer -->
+    <ng-template #footer>
+      <div class="flex items-center gap-2">
+        <button
+          pButton
+          label="Account"
+          icon="pi pi-user"
+          class="w-full"
+          outlined
+        ></button>
+        <button
+          pButton
+          label="Logout"
+          icon="pi pi-sign-out"
+          class="w-full"
+          severity="danger"
+          text
+        ></button>
+      </div>
+    </ng-template>
+  </p-drawer>
+
+  <!-- Botón para abrir el Drawer -->
+  <button pButton (click)="visible = true" icon="pi pi-bars"></button>
+</div>
