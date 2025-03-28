@@ -7,22 +7,28 @@ import (
 )
 
 type SaleRepository interface {
-	Create(sale *entities.Sale) error
+	Create(tx *gorm.DB, sale *entities.Sale) error
 	GetByID(id uint) (*entities.Sale, error)
 	GetAll() ([]entities.Sale, error)
 	Update(sale *entities.Sale) error
 	Delete(id uint) error
+	BeginTransaction() *gorm.DB
 }
 
 type gormSaleRepository struct {
-	db *gorm.DB
+	BaseRepository
 }
 
 func NewSaleRepository(db *gorm.DB) SaleRepository {
-	return &gormSaleRepository{db: db}
+	return &gormSaleRepository{
+		BaseRepository: *NewBaseRepository(db),
+	}
 }
 
-func (r *gormSaleRepository) Create(sale *entities.Sale) error {
+func (r *gormSaleRepository) Create(tx *gorm.DB, sale *entities.Sale) error {
+	if tx != nil {
+		return tx.Create(sale).Error
+	}
 	return r.db.Create(sale).Error
 }
 

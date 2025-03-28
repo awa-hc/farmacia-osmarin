@@ -25,7 +25,7 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 	categorySvc := service.NewCategoryService(categoryRepo)
 	purchaseSvc := service.NewPurchaseService(purchaseRepo, purchaseDetailRepo)
 	purchaseDetailSvc := service.NewPurchaseDetailService(purchaseDetailRepo)
-	saleSvc := service.NewSaleService(saleRepo, saleDetailRepo)
+	saleSvc := service.NewSaleService(saleRepo, saleDetailRepo, productRepo)
 	saleDetailSvc := service.NewSaleDetailService(saleDetailRepo)
 
 	// Handlers
